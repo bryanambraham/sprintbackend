@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('cargodarat', function (Blueprint $table) {
             $table->id();
+            $table->string('tujuan');
+            $table->decimal('tarif', 10, 2);
+            $table->integer('min_charge');
+            $table->string('estimasi');
             $table->timestamps();
         });
     }

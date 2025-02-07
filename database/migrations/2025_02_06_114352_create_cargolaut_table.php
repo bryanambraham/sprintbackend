@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('cargolaut', function (Blueprint $table) {
             $table->id();
+            // 0 kargo 1 pelni
+            $table->integer('tipe');
+            $table->decimal('tarif', 10, 2);
+            $table->integer('min_charge');
+            $table->string('estimasi');
+            $table->string('tujuan');
             $table->timestamps();
         });
     }

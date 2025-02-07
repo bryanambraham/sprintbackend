@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('cargomobil', function (Blueprint $table) {
             $table->id();
+            // 0 towing 1 carrier
+            $table->string('tipe');
+            $table->decimal('tarif', 10, 2);
+            $table->string('estimasi');
+            $table->string('tujuan');
             $table->timestamps();
         });
     }

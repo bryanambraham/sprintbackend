@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('cargoudara', function (Blueprint $table) {
             $table->id();
+            $table->string('tarif')->default('Hubungi CS');
+            $table->integer('min_charge');
+            $table->string('estimasi');
+            $table->string('tujuan');
             $table->timestamps();
         });
     }

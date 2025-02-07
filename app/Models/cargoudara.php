@@ -7,4 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class cargoudara extends Model
 {
     //
+    protected $fillable = [
+        'tujuan',
+        'tarif',
+        'min_charge',
+        'estimasi',
+    ];
 }
