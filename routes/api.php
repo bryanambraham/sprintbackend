@@ -1,66 +1,31 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
 
-// Database connection
-$host = '127.0.0.1';
-$db   = 'sprintbackend';
-$user = 'root';
-$charset = 'utf8mb4_general_ci';
+use App\Http\Resources\BlogResource;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\DataController;
+use App\Http\Controllers\CargosController;
+use App\Http\Controllers\CargosResource;
+use App\Http\Resources\UserResource;
+use App\Models\User;
+use App\Models\blog;
+use Illuminate\Support\Facades\Route;
 
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
+Route::get('/users', function(){
+    return UserResource::collection(User::all());
+});
 
-try {
-    $pdo = new PDO($dsn, $user, $options);
+Route::get('/getblog', [BlogController::class, 'getBlogs']);
 
-    // Get parameters
-    $method = $_GET['method'] ?? '';
-    $destination = $_GET['destination'] ?? '';
+Route::get('/ongkir', [DataController::class, 'getOngkir']);
 
-    // Select table based on shipping method
-    $table = '';
-    switch($method) {
-        case 'DARAT':
-            $table = 'cargodarat';
-            break;
-        case 'LAUT':
-            $table = 'cargolaut';
-            break;
-        case 'UDARA':
-            $table = 'cargoudara';
-            break;
-        case 'MOBIL':
-            $table = 'cargomobil';
-            break;
-        default:
-            throw new Exception('Invalid shipping method');
-    }
+Route::get('/cekdarat', [CargoDaratController::class, 'getDarat']);
 
-    // Prepare and execute query
-    $query = "SELECT * FROM $table WHERE destination LIKE :destination";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute(['destination' => "%$destination%"]);
-    $results = $stmt->fetchAll();
+Route::get('/cekudara', [CargoUdaraController::class, 'getUdara']);
 
-    echo json_encode([
-        'success' => true,
-        'data' => $results
-    ]);
+Route::get('/ceklaut', [CargoLautController::class, 'getLaut']);
 
-} catch (\PDOException $e) {
-    echo json_encode([
-        'success' => false,
-        'error' => 'Database error: ' . $e->getMessage()
-    ]);
-} catch (\Exception $e) {
-    echo json_encode([
-        'success' => false,
-        'error' => $e->getMessage()
-    ]);
-}
-?>
+Route::get('/cekmobil', [CargoMobilController::class, 'getMobil']);
+
+Route::get('/getcargo', [CargosController::class, 'search']);
+
+

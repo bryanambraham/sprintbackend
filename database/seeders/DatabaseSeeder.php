@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         // Memanggil seeder-seeder yang diperlukan
         $this->call([
+            BlogSeeder::class,
             cargodaratSeeder::class,   // Memanggil cargodaratSeeder
             cargolautSeeder::class,    // Memanggil cargolautSeeder
             cargomobilSeeder::class,   // Memanggil cargomobilSeeder
