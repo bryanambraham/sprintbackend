@@ -18,14 +18,16 @@ class BlogSeeder extends Seeder
             'image' => fake()->imageUrl(640, 480, 'cover'),
             'title' => fake()->title(),
             'writer' => fake()->name(),
-            'content' => fake()->paragraph(),
+            'content' => fake()->paragraph(4),
+            'summary' => fake()->paragraph(2),
         ]);
 
         DB::table('blogs')->insert([
             'image' => fake()->imageUrl(640, 480, 'cover'),
             'title' => fake()->title(),
             'writer' => fake()->name(),
-            'content' => fake()->paragraph(),
+            'content' => fake()->paragraph(4),
+            'summary' => fake()->paragraph(2),
         ]);
     }
 }
