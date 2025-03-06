@@ -2,16 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class blog extends Model
+class Blog extends Model
 {
-    //
+    use HasFactory;
+
+    // Tentukan kolom yang bisa diisi
     protected $fillable = [
-        'image',
-        'title',
-        'writer',
-        'content',
-        'summary',
+        'title', 'writer', 'summary', 'content', 'image', 'created_at', 'updated_at'
     ];
 }

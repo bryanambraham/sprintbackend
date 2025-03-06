@@ -2,17 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\blog;
-use App\Http\Resources\BlogResource;
+use Illuminate\Http\Request;
+use App\Models\Blog;
 
 class BlogController extends Controller
 {
-    public function getBlogs()
+    // Mengambil blog posts dan mengonversi gambar BLOB menjadi Base64
+    public function getBlogPosts(Request $request)
     {
-        // Mengambil semua blog posts dari database
-        $blogs = blog::all();
+        $blogs = Blog::all();
 
-        // Mengembalikan data blog dalam bentuk JSON menggunakan BlogResource
-        return BlogResource::collection($blogs);
+        // Loop untuk mengonversi gambar menjadi Base64
+        foreach ($blogs as $blog) {
+            // Jika blog memiliki gambar, konversi gambar BLOB menjadi Base64
+            if ($blog->image) {
+                $imageData = base64_encode($blog->image); // Mengonversi BLOB ke Base64
+                $blog->image = 'data:image/jpeg;base64,' . $imageData; // Format Base64 dengan MIME type
+            }
+        }
+
+        // Mengembalikan response JSON dengan data blog
+        return response()->json([
+            'data' => $blogs,
+        ]);
     }
+
+    public function getBlogPost($id)
+    {
+        // Cari blog berdasarkan ID
+        $blog = Blog::find($id);
+
+        if (!$blog) {
+            return response()->json(['message' => 'Blog not found'], 404);
+        }
+
+        // Mengonversi gambar BLOB menjadi Base64
+        if ($blog->image) {
+            $imageData = base64_encode($blog->image); // Mengonversi BLOB ke Base64
+            $blog->image = 'data:image/jpeg;base64,' . $imageData; // Format Base64 dengan MIME type
+        }
+
+        return response()->json($blog);
+    }
+
 }

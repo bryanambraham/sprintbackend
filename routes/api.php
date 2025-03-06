@@ -16,22 +16,26 @@ Route::get('/users', function(){
     return UserResource::collection(User::all());
 });
 
-Route::get('/getblog', function () {
-    return response()->json([
-        'data' => blog::all(),
-    ]);
-});
+// Route::get('/getblog', function () {
+//     return response()->json([
+//         'data' => blog::all(),
+//     ]);
+// });
+
+// Route untuk mengambil blog posts
+Route::get('/getblog', [BlogController::class, 'getBlogPosts']);
+Route::get('/getblog/{id}', [BlogController::class, 'getBlogPost']);
 
 // Route baru untuk get blog berdasarkan ID
-Route::get('/getblog/{id}', function ($id) {
-    $artikel = blog::find($id);
+// Route::get('/getblog/{id}', function ($id) {
+//     $artikel = blog::find($id);
 
-    if (!$artikel) {
-        return response()->json(['message' => 'Artikel tidak ditemukan'], 404);
-    }
+//     if (!$artikel) {
+//         return response()->json(['message' => 'Artikel tidak ditemukan'], 404);
+//     }
 
-    return response()->json($artikel);
-});
+//     return response()->json($artikel);
+// });
 
 Route::get('/getcargo', function (Request $request) {
     $type = $request->query('type');
