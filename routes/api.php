@@ -47,6 +47,9 @@ Route::get('/getcargo', function (Request $request) {
         'laut' => 'cargolaut',
         'udara' => 'cargoudara',
         'mobil' => 'cargomobil',
+        'ftl' => 'ftl',
+        'cargo' => 'cargo',
+        'reguler' => 'reguler',
     ];
 
     // Jika tipe tidak ditemukan, kembalikan error
@@ -75,6 +78,9 @@ Route::get('/getdestinations', function (Request $request) {
         'laut' => 'cargolaut',
         'udara' => 'cargoudara',
         'mobil' => 'cargomobil',
+        'ftl' => 'ftl',
+        'cargo' => 'cargo',
+        'reguler' => 'reguler',
     ];
 
     if (!isset($tables[$type])) {
